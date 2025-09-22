@@ -1,34 +1,29 @@
 package com.galafis.bigdata.streaming
 
-import com.galafis.bigdata.config.AppConfig
-import com.galafis.bigdata.models.DataModels._
-import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
+import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.functions._
-import org.apache.spark.sql.streaming.{OutputMode, Trigger}
+import org.apache.spark.sql.streaming.{OutputMode, Trigger, StreamingQuery}
 import org.apache.spark.sql.types._
 import org.slf4j.{Logger, LoggerFactory}
-
-import java.sql.Timestamp
 import java.util.concurrent.TimeUnit
 
 /**
- * Processor for streaming data
+ * 🇺🇸 StreamProcessor: utilities to build, process and write Spark Structured Streaming pipelines
+ * 🇧🇷 StreamProcessor: utilitários para construir, processar e gravar pipelines de Spark Structured Streaming
  */
 class StreamProcessor(spark: SparkSession) {
   private val logger: Logger = LoggerFactory.getLogger(getClass)
-  
   import spark.implicits._
-  
+
+  // ---- Sources | Fontes ----------------------------------------------------
   /**
-   * Creates a streaming source for transactions
-   * 
-   * @param path Path to streaming source
-   * @return Streaming DataFrame of transactions
+   * 🇺🇸 Create a file source stream with an explicit schema (JSON/CSV/Parquet)
+   * 🇧🇷 Cria um stream de arquivos com schema explícito (JSON/CSV/Parquet)
    */
-  def createTransactionStream(path: String): DataFrame = {
-    logger.info(s"Creating transaction stream from $path")
-    
-    val transactionSchema = StructType(Array(
+  def createTransactionStream(path: String, format: String = "json"): DataFrame = {
+    logger.info(s"Creating transaction stream from $path (format=$format)")
+
+    val transactionSchema = StructType(Seq(
       StructField("id", StringType, nullable = false),
       StructField("timestamp", TimestampType, nullable = false),
       StructField("customer_id", StringType, nullable = false),
@@ -39,115 +34,87 @@ class StreamProcessor(spark: SparkSession) {
       StructField("device_type", StringType, nullable = true),
       StructField("is_fraud", BooleanType, nullable = false)
     ))
-    
+
     spark.readStream
+      .format(format)
       .schema(transactionSchema)
-      .format(AppConfig.DataConfig.format)
       .option("maxFilesPerTrigger", 1)
       .load(path)
   }
-  
+
+  // ---- Transformations | Transformações -----------------------------------
   /**
-   * Processes streaming transactions
-   * 
-   * @param transactions Streaming DataFrame of transactions
-   * @return Processed streaming DataFrame
+   * 🇺🇸 Basic enrichment and watermarking for late data handling
+   * 🇧🇷 Enriquecimento básico e watermark para lidar com eventos atrasados
    */
   def processTransactionStream(transactions: DataFrame): DataFrame = {
     logger.info("Processing transaction stream")
-    
-    // Add watermark to handle late data
-    val withWatermark = transactions
+
+    transactions
       .withWatermark("timestamp", "1 hour")
-      .as("t")
-    
-    // Enrich with additional information
-    val enriched = withWatermark
       .withColumn("processing_time", current_timestamp())
       .withColumn("year", year(col("timestamp")))
       .withColumn("month", month(col("timestamp")))
       .withColumn("day", dayofmonth(col("timestamp")))
       .withColumn("hour", hour(col("timestamp")))
-    
-    enriched
   }
-  
+
   /**
-   * Aggregates streaming transactions by time window
-   * 
-   * @param transactions Streaming DataFrame of transactions
-   * @return Aggregated streaming DataFrame
+   * 🇺🇸 Window aggregations (tumbling 1 minute window) with watermark
+   * 🇧🇷 Agregações em janelas (janela fixa de 1 minuto) com watermark
    */
   def aggregateTransactionsByWindow(transactions: DataFrame): DataFrame = {
     logger.info("Aggregating transactions by time window")
-    
-    // Define windows
-    val minuteWindow = window(col("timestamp"), "1 minute")
-    val hourWindow = window(col("timestamp"), "1 hour")
-    
-    // Aggregate by minute
-    val minuteAggregates = transactions
+
+    transactions
       .withWatermark("timestamp", "10 minutes")
-      .groupBy(minuteWindow)
-      .agg(
-        count("*").as("transaction_count"),
-        sum("amount").as("total_amount"),
-        avg("amount").as("avg_amount"),
+      .groupBy(window(col("timestamp"), "1 minute")).agg(
+        count(lit(1)).as("transaction_count"),
+        sum(col("amount")).as("total_amount"),
+        avg(col("amount")).as("avg_amount"),
         sum(when(col("is_fraud"), 1).otherwise(0)).as("fraud_count")
       )
-    
-    minuteAggregates
+      .select(
+        col("window.start").as("window_start"),
+        col("window.end").as("window_end"),
+        col("transaction_count"),
+        col("total_amount"),
+        col("avg_amount"),
+        col("fraud_count")
+      )
   }
-  
+
   /**
-   * Detects anomalies in streaming transactions
-   * 
-   * @param transactions Streaming DataFrame of transactions
-   * @return Streaming DataFrame with anomaly detection
+   * 🇺🇸 Simple rule-based anomaly detection
+   * 🇧🇷 Detecção de anomalias baseada em regras simples
    */
-  def detectAnomalies(transactions: DataFrame): DataFrame = {
+  def detectAnomalies(transactions: DataFrame,
+                      highAmountThreshold: Double = 10000.0,
+                      suspiciousLocations: Seq[String] = Seq("Unknown", "Anonymous Proxy")): DataFrame = {
     logger.info("Detecting anomalies in transaction stream")
-    
-    // Define anomaly thresholds
-    val highAmountThreshold = 10000.0
-    val suspiciousLocations = Array("Unknown", "Anonymous Proxy")
-    
-    // Detect anomalies
-    val anomalies = transactions
-      .withColumn("is_high_amount", col("amount") > highAmountThreshold)
-      .withColumn("is_suspicious_location", array_contains(lit(suspiciousLocations), col("location")))
-      .withColumn("is_anomaly", 
-        col("is_high_amount") || 
-        col("is_suspicious_location") || 
-        col("is_fraud")
+
+    transactions
+      .withColumn("is_high_amount", col("amount") > lit(highAmountThreshold))
+      .withColumn("is_suspicious_location", col("location").isin(suspiciousLocations: _*))
+      .withColumn("is_anomaly",
+        col("is_high_amount") || col("is_suspicious_location") || col("is_fraud")
       )
       .filter(col("is_anomaly"))
-    
-    anomalies
   }
-  
+
+  // ---- Sinks | Destinos ----------------------------------------------------
   /**
-   * Starts a streaming query to process transactions
-   * 
-   * @param transactions Streaming DataFrame of transactions
-   * @param checkpointDir Directory for checkpointing
-   * @param outputPath Path to write output
-   * @return Streaming query
+   * 🇺🇸 Write processed transactions to files (append) partitioned by date hierarchy
+   * 🇧🇷 Escreve transações processadas em arquivos (append) particionando por data
    */
-  def startTransactionProcessingQuery(
-    transactions: DataFrame,
-    checkpointDir: String,
-    outputPath: String
-  ): StreamingQuery = {
-    logger.info(s"Starting transaction processing query, writing to $outputPath")
-    
-    // Process transactions
-    val processedTransactions = processTransactionStream(transactions)
-    
-    // Write stream
-    processedTransactions
-      .writeStream
-      .format(AppConfig.DataConfig.format)
+  def startTransactionProcessingQuery(transactions: DataFrame,
+                                      checkpointDir: String,
+                                      outputPath: String,
+                                      format: String = "parquet"): StreamingQuery = {
+    val processed = processTransactionStream(transactions)
+
+    processed.writeStream
+      .format(format)
       .outputMode(OutputMode.Append)
       .option("checkpointLocation", s"$checkpointDir/transactions")
       .option("path", outputPath)
@@ -155,58 +122,38 @@ class StreamProcessor(spark: SparkSession) {
       .trigger(Trigger.ProcessingTime(1, TimeUnit.MINUTES))
       .start()
   }
-  
+
   /**
-   * Starts a streaming query to detect anomalies
-   * 
-   * @param transactions Streaming DataFrame of transactions
-   * @param checkpointDir Directory for checkpointing
-   * @param outputPath Path to write output
-   * @return Streaming query
+   * 🇺🇸 Write detected anomalies to files (append)
+   * 🇧🇷 Escreve anomalias detectadas em arquivos (append)
    */
-  def startAnomalyDetectionQuery(
-    transactions: DataFrame,
-    checkpointDir: String,
-    outputPath: String
-  ): StreamingQuery = {
-    logger.info(s"Starting anomaly detection query, writing to $outputPath")
-    
-    // Detect anomalies
+  def startAnomalyDetectionQuery(transactions: DataFrame,
+                                checkpointDir: String,
+                                outputPath: String,
+                                format: String = "parquet"): StreamingQuery = {
     val anomalies = detectAnomalies(transactions)
-    
-    // Write stream
-    anomalies
-      .writeStream
-      .format(AppConfig.DataConfig.format)
+
+    anomalies.writeStream
+      .format(format)
       .outputMode(OutputMode.Append)
       .option("checkpointLocation", s"$checkpointDir/anomalies")
       .option("path", outputPath)
       .trigger(Trigger.ProcessingTime(30, TimeUnit.SECONDS))
       .start()
   }
-  
+
   /**
-   * Starts a streaming query to aggregate transactions
-   * 
-   * @param transactions Streaming DataFrame of transactions
-   * @param checkpointDir Directory for checkpointing
-   * @param outputPath Path to write output
-   * @return Streaming query
+   * 🇺🇸 Write windowed aggregates to files (append)
+   * 🇧🇷 Escreve agregações por janela em arquivos (append)
    */
-  def startAggregationQuery(
-    transactions: DataFrame,
-    checkpointDir: String,
-    outputPath: String
-  ): StreamingQuery = {
-    logger.info(s"Starting aggregation query, writing to $outputPath")
-    
-    // Aggregate transactions
+  def startAggregationQuery(transactions: DataFrame,
+                            checkpointDir: String,
+                            outputPath: String,
+                            format: String = "parquet"): StreamingQuery = {
     val aggregates = aggregateTransactionsByWindow(transactions)
-    
-    // Write stream
-    aggregates
-      .writeStream
-      .format(AppConfig.DataConfig.format)
+
+    aggregates.writeStream
+      .format(format)
       .outputMode(OutputMode.Append)
       .option("checkpointLocation", s"$checkpointDir/aggregates")
       .option("path", outputPath)
@@ -214,4 +161,3 @@ class StreamProcessor(spark: SparkSession) {
       .start()
   }
 }
-
