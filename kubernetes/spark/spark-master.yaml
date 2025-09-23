@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spark-master
+spec:
+  containers:
+    - name: spark-master
+      image: TODO-Spark-Image
+# TODO: Manifesto Kubernetes conforme README.md
