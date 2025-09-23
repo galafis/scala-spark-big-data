@@ -21,7 +21,6 @@ object UnitTests extends AnyFunSuite with Matchers {
   test("should validate DataFrame schema for sales data") {
     import org.apache.spark.sql.SparkSession
     import org.apache.spark.sql.types._
-
     val expectedSchema = StructType(Array(
       StructField("id", LongType, nullable = false),
       StructField("product_name", StringType, nullable = true),
@@ -33,15 +32,12 @@ object UnitTests extends AnyFunSuite with Matchers {
       StructField("region", StringType, nullable = true),
       StructField("total_amount", DoubleType, nullable = true)
     ))
-
     val spark = SparkSession.builder().master("local").getOrCreate()
     import spark.implicits._
-
     val df = Seq(
       (1L, "Laptop", "Tech", 999.99, 1, java.sql.Date.valueOf("2025-01-01"), 123L, "North", 999.99),
       (2L, "Mouse", "Tech", 25.50, 2, java.sql.Date.valueOf("2025-01-01"), 124L, "South", 51.00)
     ).toDF("id", "product_name", "category", "price", "quantity", "sale_date", "customer_id", "region", "total_amount")
-
     df.schema shouldEqual expectedSchema
     spark.stop()
   }
@@ -61,6 +57,25 @@ object UnitTests extends AnyFunSuite with Matchers {
     result(0) shouldEqual 0.0
     result(1) shouldEqual 0.5
     result(2) shouldEqual 1.0
+    spark.stop()
+  }
+  // Novo teste funcional para processamento de dados ETL
+  test("should aggregate total sales by region") {
+    import org.apache.spark.sql.SparkSession
+    import org.apache.spark.sql.functions._
+    val spark = SparkSession.builder().master("local").getOrCreate()
+    import spark.implicits._
+    val salesDF = Seq(
+      (1L, "Laptop", "Tech", 999.99, 1, java.sql.Date.valueOf("2025-01-01"), 123L, "North", 999.99),
+      (2L, "Mouse", "Tech", 25.50, 2, java.sql.Date.valueOf("2025-01-01"), 124L, "South", 51.00),
+      (3L, "Desk", "Furniture", 300.00, 1, java.sql.Date.valueOf("2025-01-02"), 125L, "North", 300.00),
+      (4L, "Chair", "Furniture", 100.00, 3, java.sql.Date.valueOf("2025-01-02"), 126L, "South", 300.00)
+    ).toDF("id", "product_name", "category", "price", "quantity", "sale_date", "customer_id", "region", "total_amount")
+
+    val aggDF = salesDF.groupBy("region").agg(sum("total_amount").as("total_sales"))
+    val regionSales = aggDF.as[(String, Double)].collect.toMap
+    regionSales("North") shouldEqual 1299.99
+    regionSales("South") shouldEqual 351.0
     spark.stop()
   }
 }
