@@ -1,0 +1,8 @@
+# Dockerfile for Apache Spark with Scala
+FROM openjdk:11-jre
+
+# Install Spark and Scala dependencies
+# TODO: Add complete Spark installation
+
+EXPOSE 8080 7077
+CMD ["/opt/spark/bin/spark-class", "org.apache.spark.deploy.master.Master"]
