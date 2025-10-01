@@ -115,7 +115,38 @@ sbt "run analytics"
 
 ### Architecture Diagram
 
-![Architecture Diagram](images/architecture_diagram.png)
+```mermaid
+graph TD
+    A[Data Source] --> B(Data Ingestion)
+    B --> C{ETL Processing}
+    C --> D[Data Lake (Delta Lake)]
+    D --> E(Batch Processing)
+    D --> F(Streaming Processing)
+    E --> G[ML Models & Analytics]
+    F --> H[Real-time Anomaly Detection]
+    G --> I[Results & Dashboards]
+    H --> I
+    I --> J[Users/Applications]
+
+    subgraph Apache Spark
+        C
+        E
+        F
+        G
+        H
+    end
+
+    subgraph AWS S3
+        D
+    end
+
+    subgraph Scala Application
+        A
+        B
+        I
+        J
+    end
+```
 
 ### Contribution
 
