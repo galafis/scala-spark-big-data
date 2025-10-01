@@ -1,124 +1,135 @@
-# Scala Spark Big Data Platform
+# Scala Spark Big Data
 
 ![Hero Image](images/hero_image.jpg)
 
 ## 🇧🇷 Português
 
-Este repositório apresenta uma plataforma completa de Big Data desenvolvida com Scala e Apache Spark. O objetivo é demonstrar a construção de soluções robustas para processamento, análise e monitoramento de grandes volumes de dados.
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Scala](https://img.shields.io/badge/Scala-2.12-blue.svg)](https://www.scala-lang.org/)
+[![Apache Spark](https://img.shields.io/badge/Apache_Spark-3.3.0-orange.svg)](https://spark.apache.org/)
+[![sbt](https://img.shields.io/badge/sbt-1.x-green.svg)](https://www.scala-sbt.org/)
 
-### Funcionalidades Principais
+Este repositório apresenta um projeto de processamento de Big Data utilizando Scala e Apache Spark. O projeto demonstra a implementação de pipelines de ETL, análise de dados em lote e em tempo real, e a construção de modelos de machine learning para detecção de fraude e segmentação de clientes.
 
-*   **Processamento Batch:** ETL de dados transacionais e detecção de fraude.
-*   **Processamento Streaming:** Análise em tempo real de fluxos de dados.
-*   **Análise Avançada:** Segmentação de clientes, análise de séries temporais e análise de cesta de mercado.
-*   **Monitoramento:** Coleta de métricas e sistema de alertas.
-*   **Infraestrutura:** Suporte para Delta Lake, Iceberg, HDFS, S3, Kubernetes e Terraform.
+### Funcionalidades
+
+*   **Processamento de Dados em Lote (Batch Processing)**: Ingestão, transformação e carregamento de grandes volumes de dados transacionais.
+*   **Processamento de Dados em Tempo Real (Streaming Processing)**: Análise de fluxos de dados para detecção de anomalias e agregações em tempo real.
+*   **Análise de Dados e Machine Learning**: Implementação de algoritmos de machine learning para detecção de fraude, segmentação de clientes, análise de séries temporais e análise de cesta de compras.
+*   **Estrutura Modular**: Código organizado em módulos para facilitar a manutenção e escalabilidade.
+*   **Configuração Flexível**: Utilização de arquivos de configuração para gerenciar parâmetros da aplicação e do Spark.
+
+### Tecnologias Utilizadas
+
+*   **Scala**: Linguagem de programação principal.
+*   **Apache Spark**: Framework unificado para processamento de Big Data.
+*   **Delta Lake**: Camada de armazenamento de dados para data lakes.
+*   **sbt**: Ferramenta de construção para projetos Scala.
+*   **Apache Hadoop (AWS S3)**: Integração com armazenamento em nuvem.
+*   **Logback**: Sistema de logging.
+*   **ScalaTest & Mockito**: Frameworks para testes unitários.
 
 ### Estrutura do Projeto
 
 ```
-. (raiz do repositório)
-├── src/                # Código fonte principal (Scala)
-├── tests/              # Testes unitários e de integração
-├── docs/               # Documentação e diagramas
-├── config/             # Arquivos de configuração
-├── data/               # Dados de exemplo
-├── docker/             # Configurações Docker
-├── kubernetes/         # Configurações Kubernetes
-├── notebooks/          # Notebooks de exploração e prototipagem
-├── scripts/            # Scripts de automação e deploy
-├── terraform/          # Infraestrutura como Código (Terraform)
-├── images/             # Imagens e assets visuais
-├── build.sbt           # Configuração do projeto SBT
-└── README.md           # Este arquivo
+scala-spark-big-data/
+├── src/
+│   ├── main/
+│   │   └── scala/com/galafis/bigdata/
+│   │       ├── analytics/        # Lógica de análise e ML
+│   │       ├── apps/             # Aplicações principais
+│   │       ├── core/             # Componentes centrais
+│   │       ├── etl/              # Pipelines de Extração, Transformação e Carga
+│   │       ├── models/           # Definições de modelos de dados
+│   │       ├── monitoring/       # Ferramentas de monitoramento
+│   │       ├── storage/          # Camadas de abstração de armazenamento
+│   │       ├── streaming/        # Lógica de processamento de streaming
+│   │       └── utils/            # Funções utilitárias
+├── tests/
+│   ├── unit/             # Testes unitários
+│   └── integration/      # Testes de integração
+├── config/               # Arquivos de configuração da aplicação
+├── data/                 # Dados de exemplo ou mock
+├── docs/                 # Documentação adicional, diagramas
+├── images/               # Imagens e elementos visuais
+├── notebooks/            # Notebooks Jupyter/Zeppelin para exploração
+├── project/              # Configurações do sbt
+├── build.sbt             # Definições de build do sbt
+├── README.md             # Este arquivo
+├── README_EN.md          # Versão em inglês deste arquivo
+├── LICENSE               # Licença do projeto
+└── CONTRIBUTING.md       # Guia de contribuição
 ```
 
 ### Como Usar
 
-1.  **Clonar o Repositório:**
-    ```bash
-    git clone https://github.com/galafis/scala-spark-big-data.git
-    cd scala-spark-big-data
-    ```
-2.  **Compilar o Projeto:**
-    ```bash
-    sbt clean compile
-    ```
-3.  **Executar Aplicações:**
-    ```bash
-    # Modo Batch
-    sbt "run batch"
+#### Pré-requisitos
 
-    # Modo Streaming
-    sbt "run streaming"
+*   Java Development Kit (JDK) 8 ou superior
+*   sbt (Scala Build Tool)
+*   Apache Spark (para execução em cluster, opcional para `local[*]`) 
 
-    # Modo Analytics
-    sbt "run analytics"
-    ```
+#### Construção do Projeto
 
-### Diagramas de Arquitetura
+Para construir o projeto, navegue até o diretório raiz e execute:
 
-![System Architecture](images/system-architecture.png)
-
-
-
-## 🇬🇧 English
-
-This repository presents a comprehensive Big Data platform developed with Scala and Apache Spark. The goal is to demonstrate the construction of robust solutions for processing, analyzing, and monitoring large volumes of data.
-
-### Key Features
-
-*   **Batch Processing:** ETL for transactional data and fraud detection.
-*   **Streaming Processing:** Real-time analysis of data streams.
-*   **Advanced Analytics:** Customer segmentation, time series analysis, and market basket analysis.
-*   **Monitoring:** Metrics collection and alerting system.
-*   **Infrastructure:** Support for Delta Lake, Iceberg, HDFS, S3, Kubernetes, and Terraform.
-
-### Project Structure
-
-```
-. (repository root)
-├── src/                # Main source code (Scala)
-├── tests/              # Unit and integration tests
-├── docs/               # Documentation and diagrams
-├── config/             # Configuration files
-├── data/               # Sample data
-├── docker/             # Docker configurations
-├── kubernetes/         # Kubernetes configurations
-├── notebooks/          # Exploration and prototyping notebooks
-├── scripts/            # Automation and deployment scripts
-├── terraform/          # Infrastructure as Code (Terraform)
-├── images/             # Images and visual assets
-├── build.sbt           # SBT project configuration
-└── README.md           # This file
+```bash
+sbt clean compile
 ```
 
-### How to Use
+#### Execução dos Testes
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/galafis/scala-spark-big-data.git
-    cd scala-spark-big-data
-    ```
-2.  **Compile the Project:**
-    ```bash
-    sbt clean compile
-    ```
-3.  **Run Applications:**
-    ```bash
-    # Batch Mode
-    sbt "run batch"
+Para executar os testes unitários e de integração:
 
-    # Streaming Mode
-    sbt "run streaming"
+```bash
+sbt test
+```
 
-    # Analytics Mode
-    sbt "run analytics"
-    ```
+Para gerar o relatório de cobertura de código:
 
-### Architecture Diagrams
+```bash
+sbt coverageReport
+```
 
-![System Architecture](images/system-architecture.png)
+#### Execução da Aplicação
+
+O projeto pode ser executado em diferentes modos: `batch`, `streaming` ou `analytics`.
+
+**Modo Batch:**
+
+```bash
+sbt "run batch"
+```
+
+**Modo Streaming:**
+
+```bash
+sbt "run streaming"
+```
+
+**Modo Analytics:**
+
+```bash
+sbt "run analytics"
+```
+
+### Diagrama de Arquitetura
+
+![Diagrama de Arquitetura](images/system-architecture.png)
 
 
+### Contribuição
+
+Contribuições são bem-vindas! Por favor, leia o `CONTRIBUTING.md` para detalhes sobre como submeter pull requests.
+
+### Licença
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo `LICENSE` para detalhes.
+
+### Autor
+
+**Gabriel Demetrios Lafis**
+
+*   [GitHub](https://github.com/galafis)
+*   [LinkedIn](https://www.linkedin.com/in/gabriel-demetrios-lafis/)
 
