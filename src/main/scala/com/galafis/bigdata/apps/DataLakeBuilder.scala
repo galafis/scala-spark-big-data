@@ -12,8 +12,9 @@ package com.galafis.bigdata.apps
 
 import com.galafis.bigdata.core.SparkSessionManager
 import com.galafis.bigdata.storage.{DeltaLakeManager, HDFSManager}
-import com.galafis.bigdata.etl.{DataIngestion, DataTransformation}
+import com.galafis.bigdata.etl.DataProcessor
 import com.galafis.bigdata.monitoring.MetricsCollector
+import com.galafis.bigdata.monitoring.AlertManager
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import com.typesafe.config.ConfigFactory
 import scala.util.{Try, Success, Failure}
@@ -34,7 +35,6 @@ object DataLakeBuilder {
   
   private val spark: SparkSession = SparkSessionManager.getOrCreateSession("DataLakeBuilder")
   private val config = ConfigFactory.load()
-  private val metricsCollector = new MetricsCollector()
   
   /**
    * Método principal da aplicação
@@ -53,10 +53,12 @@ object DataLakeBuilder {
     } match {
       case Success(_) => 
         println("Aplicação finalizada com sucesso")
-        metricsCollector.recordSuccess("DataLakeBuilder")
+        MetricsCollector.recordSuccess("DataLakeBuilder")
+
       case Failure(exception) => 
         println(s"Erro na execução: ${exception.getMessage}")
-        metricsCollector.recordFailure("DataLakeBuilder", exception)
+        MetricsCollector.recordFailure("DataLakeBuilder", exception)
+        AlertManager.sendAlert("error", s"DataLakeBuilder failed: ${exception.getMessage}")
     }
   }
   

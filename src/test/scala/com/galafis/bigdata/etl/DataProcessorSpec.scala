@@ -11,27 +11,23 @@ import java.time.Instant
 
 class DataProcessorSpec extends AnyFlatSpec with Matchers with BeforeAndAfterAll {
   
-  private var spark: SparkSession = _
-  private var dataProcessor: DataProcessor = _
-  
-  override def beforeAll(): Unit = {
-    spark = SparkSession.builder()
+  lazy val spark: SparkSession = SparkSession.builder()
       .appName("DataProcessorSpec")
       .master("local[*]")
       .getOrCreate()
-    
-    dataProcessor = new DataProcessor(spark)
-  }
-  
+
+  import spark.implicits._
+
+  lazy val dataProcessor = new DataProcessor(spark)
+
   override def afterAll(): Unit = {
     if (spark != null) {
       spark.stop()
-      spark = null
     }
+    super.afterAll()
   }
   
   "DataProcessor" should "process transactions correctly" in {
-    import spark.implicits._
     
     // Create test data
     val transactions = Seq(
@@ -65,7 +61,6 @@ class DataProcessorSpec extends AnyFlatSpec with Matchers with BeforeAndAfterAll
   }
   
   it should "detect fraud correctly" in {
-    import spark.implicits._
     
     // Create test data
     val transactions = Seq(

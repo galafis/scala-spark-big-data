@@ -9,7 +9,7 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 object IcebergManager {
 
   def writeIceberg(df: DataFrame, table: String): Unit = {
-    df.writeTo(table).using("iceberg").append()
+    df.writeTo(table).using("iceberg").createOrReplace()
   }
 
   def readIceberg(spark: SparkSession, table: String): DataFrame = {

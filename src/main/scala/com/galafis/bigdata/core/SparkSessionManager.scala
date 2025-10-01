@@ -3,7 +3,7 @@ package com.galafis.bigdata.core
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.SparkConf
 import org.apache.spark.serializer.KryoSerializer
-import org.apache.spark.sql.catalyst.expressions.codegen.CodegenObjectFactoryMode
+
 import com.typesafe.config.{Config, ConfigFactory}
 import scala.util.{Try, Success, Failure}
 
@@ -43,7 +43,7 @@ object SparkSessionManager {
       .set("spark.sql.adaptive.coalescePartitions.enabled", "true")
       .set("spark.sql.adaptive.skewJoin.enabled", "true")
       .set("spark.sql.codegen.wholeStage", "true")
-      .set("spark.sql.codegen.factoryMode", CodegenObjectFactoryMode.CODEGEN_ONLY.toString)
+
       
     // Configurações de memória otimizadas
     conf.set("spark.executor.memory", config.getString("spark.executor.memory"))

@@ -22,4 +22,15 @@ object MetricsCollector {
       "numColumns" -> df.columns.length.toDouble
     )
   }
+
+  def recordSuccess(appName: String): Unit = {
+    println(s"METRIC - $appName: Success")
+    // Implementar lógica de registro de sucesso (ex: Prometheus, InfluxDB)
+  }
+
+  def recordFailure(appName: String, exception: Throwable): Unit = {
+    println(s"METRIC - $appName: Failure - ${exception.getMessage}")
+    // Implementar lógica de registro de falha (ex: Prometheus, InfluxDB)
+  }
 }
+

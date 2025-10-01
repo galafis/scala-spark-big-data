@@ -11,8 +11,8 @@
 package com.galafis.bigdata.apps
 
 import com.galafis.bigdata.core.SparkSessionManager
-import com.galafis.bigdata.streaming.{KafkaStreamProcessor, StreamProcessor}
-import com.galafis.bigdata.analytics.{MLPipelineEngine, TimeSeriesAnalysis}
+import com.galafis.bigdata.streaming.{KafkaStreaming, StreamProcessor}
+import com.galafis.bigdata.analytics.AnalyticsEngine
 import com.galafis.bigdata.monitoring.{MetricsCollector, AlertManager}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.streaming.{StreamingQuery, Trigger}
@@ -37,8 +37,7 @@ object RealtimeAnalytics {
   
   private val spark: SparkSession = SparkSessionManager.getOrCreateSession("RealtimeAnalytics")
   private val config = ConfigFactory.load()
-  private val metricsCollector = new MetricsCollector()
-  private val alertManager = new AlertManager()
+
   
   /**
    * Método principal da aplicação
@@ -57,10 +56,11 @@ object RealtimeAnalytics {
     } match {
       case Success(_) => 
         println("Aplicação finalizada com sucesso")
-        metricsCollector.recordSuccess("RealtimeAnalytics")
+        MetricsCollector.recordSuccess("RealtimeAnalytics")
       case Failure(exception) => 
         println(s"Erro na execução: ${exception.getMessage}")
-        metricsCollector.recordFailure("RealtimeAnalytics", exception)
+        MetricsCollector.recordFailure("RealtimeAnalytics", exception)
+        AlertManager.sendAlert("error", s"RealtimeAnalytics failed: ${exception.getMessage}")
     }
   }
   

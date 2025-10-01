@@ -1,0 +1,10 @@
+[0m[[0m[31merror[0m] [0m[0m/home/ubuntu/scala-spark-big-data/src/test/scala/com/galafis/bigdata/etl/DataProcessorSpec.scala:23:18: stable identifier required, but DataProcessorSpec.this.spark.implicits found.[0m
+[0m[[0m[31merror[0m] [0m[0m    import spark.implicits._ // Importar aqui para garantir que esteja no escopo[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ubuntu/scala-spark-big-data/src/test/scala/com/galafis/bigdata/etl/DataProcessorSpec.scala:35:18: stable identifier required, but DataProcessorSpec.this.spark.implicits found.[0m
+[0m[[0m[31merror[0m] [0m[0m    import spark.implicits._[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/ubuntu/scala-spark-big-data/src/test/scala/com/galafis/bigdata/etl/DataProcessorSpec.scala:69:18: stable identifier required, but DataProcessorSpec.this.spark.implicits found.[0m
+[0m[[0m[31merror[0m] [0m[0m    import spark.implicits._[0m
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m
+[0m[[0m[31merror[0m] [0m[0mthree errors found[0m

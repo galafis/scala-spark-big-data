@@ -9,6 +9,8 @@ import org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}
 import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
+import org.apache.spark.sql.expressions.Window
+import org.apache.spark.ml.fpm.FPGrowth
 import org.slf4j.{Logger, LoggerFactory}
 
 /**

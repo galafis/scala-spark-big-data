@@ -1,0 +1,154 @@
+[0m[[0m[0mdebug[0m] [0m[0mjavaOptions: Vector()[0m
+[0m[[0m[0mdebug[0m] [0m[0mForking tests - parallelism = false[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreate a single-thread test executor[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunner for org.scalatest.tools.Framework produced 1 initial tasks for 1 tests.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(com.galafis.bigdata.etl.DataProcessorSpec, sbt.ForkMain$SubclassFingerscan@6321e813, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mDataProcessorSpec:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mDataProcessor[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31mcom.galafis.bigdata.etl.DataProcessorSpec *** ABORTED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  java.lang.NoClassDefFoundError: org/json4s/JsonAST$JValue[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.ui.jobs.JobsTab.<init>(JobsTab.scala:47)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.ui.SparkUI.initialize(SparkUI.scala:81)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.ui.SparkUI.<init>(SparkUI.scala:103)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.ui.SparkUI$.create(SparkUI.scala:223)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.SparkContext.<init>(SparkContext.scala:484)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.SparkContext$.getOrCreate(SparkContext.scala:2704)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.sql.SparkSession$Builder.$anonfun$getOrCreate$2(SparkSession.scala:953)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.Option.getOrElse(Option.scala:189)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:947)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at com.galafis.bigdata.etl.DataProcessorSpec.$anonfun$new$1(DataProcessorSpec.scala:16)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Cause: java.lang.ClassNotFoundException: org.json4s.JsonAST$JValue[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.ui.jobs.JobsTab.<init>(JobsTab.scala:47)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.ui.SparkUI.initialize(SparkUI.scala:81)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.ui.SparkUI.<init>(SparkUI.scala:103)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.ui.SparkUI$.create(SparkUI.scala:223)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.SparkContext.<init>(SparkContext.scala:484)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.SparkContext$.getOrCreate(SparkContext.scala:2704)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.apache.spark.sql.SparkSession$Builder.$anonfun$getOrCreate$2(SparkSession.scala:953)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[31merror[0m] [0m[0mUncaught exception when running com.galafis.bigdata.etl.DataProcessorSpec: java.lang.NoClassDefFoundError: org/json4s/JsonAST$JValue[0m
+[0m[[0m[31merror[0m] [0m[0msbt.ForkMain$ForkError: java.lang.NoClassDefFoundError: org/json4s/JsonAST$JValue[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.ui.jobs.JobsTab.<init>(JobsTab.scala:47)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.ui.SparkUI.initialize(SparkUI.scala:81)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.ui.SparkUI.<init>(SparkUI.scala:103)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.ui.SparkUI$.create(SparkUI.scala:223)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.SparkContext.<init>(SparkContext.scala:484)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.SparkContext$.getOrCreate(SparkContext.scala:2704)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.sql.SparkSession$Builder.$anonfun$getOrCreate$2(SparkSession.scala:953)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.Option.getOrElse(Option.scala:189)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:947)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.galafis.bigdata.etl.DataProcessorSpec.$anonfun$new$1(DataProcessorSpec.scala:16)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.Transformer.apply(Transformer.scala:22)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.Transformer.apply(Transformer.scala:20)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike$$anon$5.apply(AnyFlatSpecLike.scala:1812)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.TestSuite.withFixture$(TestSuite.scala:195)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.withFixture(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.invokeWithFixture$1(AnyFlatSpecLike.scala:1810)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.$anonfun$runTest$1(AnyFlatSpecLike.scala:1822)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runTestImpl(Engine.scala:306)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.runTest(AnyFlatSpecLike.scala:1822)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.runTest$(AnyFlatSpecLike.scala:1804)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.runTest(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.$anonfun$runTests$1(AnyFlatSpecLike.scala:1880)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.$anonfun$runTestsInBranch$1(Engine.scala:413)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.List.foreach(List.scala:431)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.traverseSubNodes$1(Engine.scala:401)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runTestsInBranch(Engine.scala:390)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.$anonfun$runTestsInBranch$1(Engine.scala:427)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.List.foreach(List.scala:431)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.traverseSubNodes$1(Engine.scala:401)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runTestsInBranch(Engine.scala:396)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runTestsImpl(Engine.scala:475)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.runTests(AnyFlatSpecLike.scala:1880)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.runTests$(AnyFlatSpecLike.scala:1879)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.runTests(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.Suite.run(Suite.scala:1114)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.Suite.run$(Suite.scala:1096)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.org$scalatest$flatspec$AnyFlatSpecLike$$super$run(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.$anonfun$run$1(AnyFlatSpecLike.scala:1925)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runImpl(Engine.scala:535)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.run(AnyFlatSpecLike.scala:1925)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.run$(AnyFlatSpecLike.scala:1923)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.run(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.tools.Framework.org$scalatest$tools$Framework$$runSuite(Framework.scala:321)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.tools.Framework$ScalaTestTask.execute(Framework.scala:516)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.ForkMain$Run.lambda$runTest$1(ForkMain.java:413)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.Thread.run(Thread.java:829)[0m
+[0m[[0m[31merror[0m] [0m[0mCaused by: sbt.ForkMain$ForkError: java.lang.ClassNotFoundException: org.json4s.JsonAST$JValue[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:581)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.ui.jobs.JobsTab.<init>(JobsTab.scala:47)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.ui.SparkUI.initialize(SparkUI.scala:81)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.ui.SparkUI.<init>(SparkUI.scala:103)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.ui.SparkUI$.create(SparkUI.scala:223)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.SparkContext.<init>(SparkContext.scala:484)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.SparkContext$.getOrCreate(SparkContext.scala:2704)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.sql.SparkSession$Builder.$anonfun$getOrCreate$2(SparkSession.scala:953)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.Option.getOrElse(Option.scala:189)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.apache.spark.sql.SparkSession$Builder.getOrCreate(SparkSession.scala:947)[0m
+[0m[[0m[31merror[0m] [0m[0m	at com.galafis.bigdata.etl.DataProcessorSpec.$anonfun$new$1(DataProcessorSpec.scala:16)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.java:23)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.Transformer.apply(Transformer.scala:22)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.Transformer.apply(Transformer.scala:20)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike$$anon$5.apply(AnyFlatSpecLike.scala:1812)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.TestSuite.withFixture$(TestSuite.scala:195)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.withFixture(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.invokeWithFixture$1(AnyFlatSpecLike.scala:1810)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.$anonfun$runTest$1(AnyFlatSpecLike.scala:1822)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runTestImpl(Engine.scala:306)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.runTest(AnyFlatSpecLike.scala:1822)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.runTest$(AnyFlatSpecLike.scala:1804)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.runTest(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.$anonfun$runTests$1(AnyFlatSpecLike.scala:1880)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.$anonfun$runTestsInBranch$1(Engine.scala:413)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.List.foreach(List.scala:431)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.traverseSubNodes$1(Engine.scala:401)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runTestsInBranch(Engine.scala:390)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.$anonfun$runTestsInBranch$1(Engine.scala:427)[0m
+[0m[[0m[31merror[0m] [0m[0m	at scala.collection.immutable.List.foreach(List.scala:431)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.traverseSubNodes$1(Engine.scala:401)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runTestsInBranch(Engine.scala:396)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runTestsImpl(Engine.scala:475)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.runTests(AnyFlatSpecLike.scala:1880)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.runTests$(AnyFlatSpecLike.scala:1879)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.runTests(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.Suite.run(Suite.scala:1114)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.Suite.run$(Suite.scala:1096)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.org$scalatest$flatspec$AnyFlatSpecLike$$super$run(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.$anonfun$run$1(AnyFlatSpecLike.scala:1925)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.SuperEngine.runImpl(Engine.scala:535)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.run(AnyFlatSpecLike.scala:1925)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpecLike.run$(AnyFlatSpecLike.scala:1923)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.flatspec.AnyFlatSpec.run(AnyFlatSpec.scala:1685)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.tools.Framework.org$scalatest$tools$Framework$$runSuite(Framework.scala:321)[0m
+[0m[[0m[31merror[0m] [0m[0m	at org.scalatest.tools.Framework$ScalaTestTask.execute(Framework.scala:516)[0m
+[0m[[0m[31merror[0m] [0m[0m	at sbt.ForkMain$Run.lambda$runTest$1(ForkMain.java:413)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)[0m
+[0m[[0m[31merror[0m] [0m[0m	at java.base/java.lang.Thread.run(Thread.java:829)[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 804 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 0, aborted 1[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 0, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 1 SUITE ABORTED ***[0m[0m
+[0m[[0m[31merror[0m] [0m[0mError during tests:[0m
+[0m[[0m[31merror[0m] [0m[0m	com.galafis.bigdata.etl.DataProcessorSpec[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mtest[0m) sbt.TestsFailedException: Tests unsuccessful[0m
