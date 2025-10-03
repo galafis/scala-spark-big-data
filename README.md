@@ -4,6 +4,9 @@
 
 ## 🇧🇷 Português
 
+[![English Version](https://img.shields.io/badge/English%20Version-README_EN.md-blue)](README_EN.md)
+
+
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Scala](https://img.shields.io/badge/Scala-2.12-blue.svg)](https://www.scala-lang.org/)
 [![Apache Spark](https://img.shields.io/badge/Apache_Spark-3.3.0-orange.svg)](https://spark.apache.org/)
@@ -56,7 +59,8 @@ scala-spark-big-data/
 ├── project/              # Configurações do sbt
 ├── build.sbt             # Definições de build do sbt
 ├── README.md             # Este arquivo
-├── README_EN.md          # Versão em inglês deste arquivo
+├── README_EN.md          # Versão em inglês deste arquivo (English Version)
+
 ├── LICENSE               # Licença do projeto
 └── CONTRIBUTING.md       # Guia de contribuição
 ```
@@ -117,27 +121,16 @@ sbt "run analytics"
 
 ```mermaid
 graph TD
-    A[Fonte de Dados]
-    B(Ingestão de Dados)
-    C{Processamento ETL}
-    D[Data Lake (Delta Lake)]
-    E(Processamento em Lote)
-    F(Processamento em Streaming)
-    G[Modelos de ML & Análises]
-    H[Detecção de Anomalias em Tempo Real]
-    I[Resultados & Dashboards]
-    J[Usuários/Aplicações]
-
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    D --> F
-    E --> G
-    F --> H
-    G --> I
+    A[Fonte de Dados] --> B(Ingestão de Dados)
+    B --> C{Processamento ETL}
+    C --> D[Data Lake (Delta Lake)]
+    D --> E(Processamento em Lote)
+    D --> F(Processamento em Streaming)
+    E --> G[Modelos de ML & Análises]
+    F --> H[Detecção de Anomalias em Tempo Real]
+    G --> I[Resultados & Dashboards]
     H --> I
-    I --> J
+    I --> J[Usuários/Aplicações]
 
     subgraph Apache Spark
         C

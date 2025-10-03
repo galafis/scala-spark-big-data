@@ -148,10 +148,6 @@ graph TD
     end
 ```
 
-### Contribution
-
-Contributions are welcome! Please read `CONTRIBUTING.md` for details on how to submit pull requests.
-
 ### License
 
 This project is licensed under the MIT License - see the `LICENSE` file for details.
